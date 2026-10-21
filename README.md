@@ -42,6 +42,8 @@ Tests (test\_alu.py):
 
 \- `test\_and\_or`
 
+\- `test\_random`: 500 random inputs checked against a Python reference model. I planted a bug (AND changed to OR) to prove it fails when the design is wrong, then fixed it.
+
 
 
 \## How to run
