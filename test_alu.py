@@ -1,5 +1,17 @@
+import random
+
 import cocotb
 from cocotb.triggers import Timer
+
+
+def model(a, b, op):
+    if op == 0:
+        return (a + b) & 0xF
+    if op == 1:
+        return (a - b) & 0xF
+    if op == 2:
+        return a & b
+    return a | b
 
 
 async def check(dut, a, b, op, expected):
@@ -28,3 +40,12 @@ async def test_subtract(dut):
 async def test_and_or(dut):
     await check(dut, 12, 10, 2, 8)
     await check(dut, 12, 10, 3, 14)
+
+
+@cocotb.test()
+async def test_random(dut):
+    for _ in range(500):
+        a = random.randint(0, 15)
+        b = random.randint(0, 15)
+        op = random.randint(0, 3)
+        await check(dut, a, b, op, model(a, b, op))
